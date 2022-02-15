@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Products>
+@{
+
+}
+<br />
+<br />
+<div class="row">
+    <div class="col-6">
+        <h2 class="text-info">Product List</h2>
+    </div>
+    <div class="col-6 text-right">
+        <a asp-action="Create" class="btn btn-info"><i class="fas fa-plus"></i>&nbsp;New Product</a>
+    </div>
+</div>
+<br />
+<div>
+    <table class="table table-striped border">
+        <tr class="table-info">
+            <th>@Html.DisplayNameFor(c => c.Name)</th>
+            <th>@Html.DisplayNameFor(c => c.Price)</th>
+            <th>@Html.DisplayNameFor(c => c.ProductColor)</th>
+            <th>@Html.DisplayNameFor(c => c.IsAvailable)</th>
+            <th>@Html.DisplayNameFor(c => c.ProductTypeId)</th>
+            <th>@Html.DisplayNameFor(c => c.SpecialTagId)</th>
+            <th></th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Price</td>
+                <td>@item.ProductColor</td>
+                <td>@item.IsAvailable</td>
+                <td>@item.ProductTypes.productType</td>
+                <td>@item.SpecialTags.ProductTag</td>
+                <td><partial name="_ButtonPartial" model="@item.Id" /></td>
+            </tr>
+        }
+    </table>
+</div>
+@section scripts{
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    @if (TempData != null)
+    {
+        <script type="text/javascript">
+
+        $(function () {
+            var save = '@TempData["save"]'
+            var update = '@TempData["update"]'
+            var deletes = '@TempData["delete"]'
+            if (save != '') {
+                alertify.success(save);
+            }
+            if (update != '') {
+                alertify.success(update);
+            }
+            if (deletes != '') {
+                alertify.success(deletes);
+            }
+        })
+        </script>
+    }
+}
+
