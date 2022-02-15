@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ProductTypes>
+@{
+
+}
+<br />
+<br />
+<div class="row">
+    <div class="col-6">
+        <h2 class="text-info">Product Tag List</h2>
+    </div>
+    <div class="col-6 text-right">
+        <a asp-action="Create" class="btn btn-info"><i class="fas fa-plus"></i>&nbsp;New Product Type</a>
+    </div>
+</div>
+<br />
+<div>
+    <table class="table table-striped border">
+        <tr class="table-info">
+            <th>@Html.DisplayNameFor(c => c.productType)</th>
+            <th></th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.productType</td>
+                <td><partial name="_ButtonPartial" model="@item.Id" /></td>
+            </tr>
+        }
+    </table>
+</div>
+@section scripts{
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    @if (TempData != null)
+    {
+        <script type="text/javascript">
+
+        $(function () {
+            var save = '@TempData["save"]'
+            var update = '@TempData["update"]'
+            var deletes = '@TempData["delete"]'
+            if (save != '') {
+                alertify.success(save);
+            }
+            if (update != '') {
+                alertify.success(update);
+            }
+            if (deletes != '') {
+                alertify.success(deletes);
+            }
+        })
+        </script>
+    }
+}
