@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using OnlineShop.Data;
 using OnlineShop.Models;
 using System;
 using System.Collections.Generic;
@@ -12,16 +14,14 @@ namespace OnlineShop.Controllers
     [Area("Customer")]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private ApplicationDbContext _db;
+        public HomeController(ApplicationDbContext db)
         {
-            _logger = logger;
+            _db = db;
         }
-
         public IActionResult Index()
         {
-            return View();
+            return View(_db.products.Include(c => c.ProductTypes).Include(c => c.SpecialTags).ToList());
         }
 
         public IActionResult Privacy()
