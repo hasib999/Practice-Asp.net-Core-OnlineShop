@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+@section scripts{
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+    @if (TempData != null)
+    {
+        <script type="text/javascript">
+        $(function () {
+            var save = '@TempData["save"]'
+            var update = '@TempData["update"]'
+            var deletes = '@TempData["delete"]'
+            if (save != '') {
+                alertify.success(save);
+            }
+            if (update != '') {
+                alertify.success(update);
+            }
+            if (deletes != '') {
+                alertify.success(deletes);
+            }
+        })
+        </script>
+    }
+}
