@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using OnlineShop.Data;
 using OnlineShop.Models;
 using System;
 using System.Collections.Generic;
@@ -12,19 +13,19 @@ namespace OnlineShop.Areas.Customer.Controllers
     public class UserController : Controller
     {
         UserManager<IdentityUser> _userManager;
-
-        public UserController(UserManager<IdentityUser> userManager)
+        private ApplicationDbContext _db;
+        public UserController(UserManager<IdentityUser> userManager, ApplicationDbContext db)
         {
             _userManager = userManager;
+            _db = db;
         }
         public IActionResult Index()
         {
-            return View();
+            return View(_db.applicationUsers.ToList());
         }
         [HttpGet]
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
-
             return View();
         }
         [HttpPost]
@@ -45,6 +46,139 @@ namespace OnlineShop.Areas.Customer.Controllers
                 }
             }
             return View();
+        }
+        [HttpGet]
+        public IActionResult Edit(string id)
+        {
+            var user = _db.applicationUsers.FirstOrDefault(c => c.Id == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(ApplicationUser applicationUser)
+        {
+            var user = _db.applicationUsers.FirstOrDefault(c => c.Id == applicationUser.Id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            user.FirstName = applicationUser.FirstName;
+            user.LastName = applicationUser.LastName;
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                TempData["update"] = "User Updated Successfully";
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
+        }
+        [HttpGet]
+        public IActionResult Details(string id)
+        {
+            var user = _db.applicationUsers.FirstOrDefault(c => c.Id == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
+        [HttpGet]
+        public IActionResult Lockout(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var user = _db.applicationUsers.FirstOrDefault(c => c.Id == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return View(user);
+        }
+        [HttpPost]
+        public IActionResult Lockout(ApplicationUser applicationUser)
+        {
+            var user = _db.applicationUsers.FirstOrDefault(c => c.Id == applicationUser.Id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            user.LockoutEnd = DateTime.Now.AddYears(100);
+            int rowAffected = _db.SaveChanges();
+            if (rowAffected > 0)
+            {
+                TempData["save"] = "User Lockout Successfully";
+                return RedirectToAction(nameof(Index));
+            }
+            return View(user);
+        }
+        [HttpGet]
+        public IActionResult Active(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var user = _db.applicationUsers.FirstOrDefault(c => c.Id == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return View(user);
+        }
+        [HttpPost]
+        public IActionResult Active(ApplicationUser applicationUser)
+        {
+            var user = _db.applicationUsers.FirstOrDefault(c => c.Id == applicationUser.Id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            user.LockoutEnd = DateTime.Now.AddDays(-1);
+            int rowAffected = _db.SaveChanges();
+            if (rowAffected > 0)
+            {
+                TempData["save"] = "User Active Successfully";
+                return RedirectToAction(nameof(Index));
+            }
+            return View(user);
+        }
+        [HttpGet]
+        public IActionResult Delete(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var user = _db.applicationUsers.FirstOrDefault(c => c.Id == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return View(user);
+        }
+        [HttpPost]
+        public IActionResult Delete(ApplicationUser applicationUser)
+        {
+            var user = _db.applicationUsers.FirstOrDefault(c => c.Id == applicationUser.Id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            _db.applicationUsers.Remove(user);
+            int rowAffected = _db.SaveChanges();
+            if (rowAffected > 0)
+            {
+                TempData["Delete"] = "User Delete Successfully";
+                return RedirectToAction(nameof(Index));
+            }
+            return View(user);
         }
     }
 }
