@@ -33,7 +33,11 @@ namespace OnlineShop.Areas.Customer.Controllers
         {
             if (ModelState.IsValid)
             {
+                
+                applicationUser.EmailConfirmed = true;
+                applicationUser.Email = applicationUser.UserName;
                 var result = await _userManager.CreateAsync(applicationUser, applicationUser.PasswordHash);
+                var isSaveRole = await _userManager.AddToRoleAsync(applicationUser, "User");
                 if (result.Succeeded)
                 {
                     TempData["save"] = "User Created Successfully";
