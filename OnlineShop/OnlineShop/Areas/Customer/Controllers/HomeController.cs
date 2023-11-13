@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using OnlineShop.Data;
@@ -79,6 +80,7 @@ namespace OnlineShop.Controllers
         //Get Remove Action Method
         [HttpGet]
         [ActionName("Remove")]
+        [Authorize(Roles = "User")]
         public IActionResult RemoveToCart(int? id)
         {
             //get session
@@ -116,6 +118,7 @@ namespace OnlineShop.Controllers
         }
 
         //Get Product cart action method
+        [Authorize(Roles = "User")]
         public IActionResult Cart()
         {
             //get session

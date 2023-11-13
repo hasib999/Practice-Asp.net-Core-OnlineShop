@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Data;
 using OnlineShop.Models;
@@ -19,6 +20,7 @@ namespace OnlineShop.Areas.Customer.Controllers
             _userManager = userManager;
             _db = db;
         }
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             return View(_db.applicationUsers.ToList());
@@ -26,6 +28,11 @@ namespace OnlineShop.Areas.Customer.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                // If authenticated, redirect to another page
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
         [HttpPost]
@@ -52,6 +59,7 @@ namespace OnlineShop.Areas.Customer.Controllers
             return View();
         }
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(string id)
         {
             var user = _db.applicationUsers.FirstOrDefault(c => c.Id == id);
@@ -92,6 +100,7 @@ namespace OnlineShop.Areas.Customer.Controllers
             return View(user);
         }
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Lockout(string id)
         {
             if (id == null)
@@ -123,6 +132,7 @@ namespace OnlineShop.Areas.Customer.Controllers
             return View(user);
         }
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Active(string id)
         {
             if (id == null)
@@ -154,6 +164,7 @@ namespace OnlineShop.Areas.Customer.Controllers
             return View(user);
         }
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(string id)
         {
             if (id == null)

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Data;
 using OnlineShop.Models;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 namespace OnlineShop.Areas.Customer.Controllers
 {
     [Area("Customer")]
+    [Authorize(Roles = "User")]
     public class OrderController : Controller
     {
         private ApplicationDbContext _db;
@@ -44,7 +46,7 @@ namespace OnlineShop.Areas.Customer.Controllers
             _db.order.Add(order);
             await _db.SaveChangesAsync();
             //Set Session null
-            HttpContext.Session.Clear();
+            HttpContext.Session.Remove("products"); 
             return Redirect("/Customer/Home");
         }
         public string GetOrderNo()
