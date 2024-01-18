@@ -1,0 +1,31 @@
+﻿@model OnlineShop.Models.Payment
+<br />
+<h2 class="text-info">Payment</h2>
+<form asp-action="Payment" method="post" enctype="multipart/form-data">
+    <div class="p-4 rounded border row">
+        <div asp-validation-summary="ModelOnly" class="text-danger">
+        </div>
+        <h5 align="center" class="text-secondary">Make payment via bKash on this 01448578381 Merchant number, after that please submit your Transaction Id</h5>
+        <br />
+        <div class="col-6">
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="TransactionId"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Id" type="hidden" />
+                    <input asp-for="TransactionId" class="form-control" placeholder="Enter Transaction Id"/>
+                    <span asp-validation-for="TransactionId" class="text-danger"></span>
+                    <br />
+                    <input type="submit" value="Submit" class="btn btn-success" />
+                </div>
+
+                <br />
+            </div>
+            
+            
+        </div>
+    </div>
+</form>
+
+

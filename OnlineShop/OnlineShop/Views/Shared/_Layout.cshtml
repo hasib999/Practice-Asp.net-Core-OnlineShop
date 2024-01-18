@@ -17,7 +17,9 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - OnlineShop</title>
+    <title>@ViewData["Title"] - DIU Store</title>
+    <link rel="icon" type="image/x-icon" href="https://drive.google.com/file/d/1sJ2m7oGi3ahBXTRiXGmgi6ln3nLhTTHt/view?usp=sharing">
+    
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
@@ -36,7 +38,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">OnlineShop</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DIU <span class="text-success">Store</span></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -58,6 +60,9 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="Customer" asp-controller="User" asp-action="Index">User List</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Admin" asp-controller="Order" asp-action="OrderDetails">Order Details</a>
+                            </li>
                         }
                         @if (userRole == "User")
                         {
@@ -65,6 +70,11 @@
                                 <a class="nav-link text-dark" asp-area="Customer" asp-controller="Home" asp-action="Cart">
                                     <i class="fas fa-shopping-cart"></i>
                                     (@count)
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Customer" asp-controller="Order" asp-action="OrderDetails">
+                                    Order Details
                                 </a>
                             </li>
                         }

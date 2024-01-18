@@ -1,0 +1,39 @@
+﻿@model IEnumerable<OnlineShop.Areas.Customer.Models.OrdersDetails>
+
+<div>
+    <table class="table table-striped border" id="myTable">
+        <thead>
+            <tr class="table-info">
+                @* <th>@Html.DisplayNameFor(c => c.CustomerName)</th>
+                <th>@Html.DisplayNameFor(c => c.PhoneNo)</th>
+                <th>@Html.DisplayNameFor(c => c.Email)</th>
+                <th>@Html.DisplayNameFor(c => c.Address)</th> *@
+                <th>@Html.DisplayNameFor(c => c.ProductName)</th>
+                <th>@Html.DisplayNameFor(c => c.Price)</th>
+                <th>@Html.DisplayNameFor(c => c.Image)</th>
+                <th>@Html.DisplayNameFor(c => c.ProductColor)</th>
+                <th>@Html.DisplayNameFor(c => c.TransactionId)</th>
+                <th>@Html.DisplayNameFor(c => c.OrderStatus)</th>
+                <th>@Html.DisplayNameFor(c => c.OrderDate)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @* <td>@item.CustomerName</td>
+                    <td>@item.PhoneNo</td>
+                    <td>@item.Email</td>
+                    <td>@item.Address</td> *@
+                    <td>@item.ProductName</td>
+                    <td>@item.Price</td>
+                    <td><img src="/@item.Image" style="height:100px"/></td>
+                    <td>@item.ProductColor</td>
+                    <td>@item.TransactionId</td>
+                    <td>@item.OrderStatus</td>
+                    <td>@item.OrderDate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

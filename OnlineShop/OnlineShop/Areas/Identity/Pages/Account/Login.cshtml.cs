@@ -100,6 +100,10 @@ namespace OnlineShop.Areas.Identity.Pages.Account
                     {
                         HttpContext.Session.SetString("roleName", roleInfo.RoleName);
                     }
+                    if (userInfo != null)
+                    {
+                        HttpContext.Session.SetString("UserId", userInfo.Id);
+                    }
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }

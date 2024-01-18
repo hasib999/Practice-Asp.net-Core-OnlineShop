@@ -18,5 +18,7 @@ namespace OnlineShop.Models
         public Order Order { get; set; }
         [ForeignKey("ProductId")]
         public Products Product { get; set; }
+        public string UserId { get; set; }
+        public string OrderStatus { get; set; }
     }
 }
